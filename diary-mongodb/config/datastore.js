@@ -1,0 +1,3 @@
+/*
+Configuration and details for application datastore.
+*/
