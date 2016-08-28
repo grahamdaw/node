@@ -1,3 +1,0 @@
-/*
-Environment configuration for application.
-*/
