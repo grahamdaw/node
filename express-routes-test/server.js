@@ -12,11 +12,26 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Add Routes
-require('./api.routes')(app);
-require('./app.routes')(app);
+//Routes
+require('./routes.api')(app);
+require('./routes.app')(app);
 
+// Unhandled requests
+app.use(function(req, res, next) {
+  console.error('404 : ' + req.url );
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
 
+// Error handling
+app.use(function(err, req, res, next) {
+  console.error( err.stack);
+  res.status(err.status || 500).send({
+    message: err.message,
+    error: err.stack
+  });
+});
 
 // Run app
 var port = process.env.PORT || 8080;
